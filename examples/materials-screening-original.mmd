@@ -1,0 +1,20 @@
+flowchart LR
+    subgraph P1 [候选准备]
+        direction TB
+        A[目标与阈值] --> B[获取候选]
+        B --> C[去重与预筛]
+    end
+    subgraph P2 [计算筛选]
+        direction TB
+        D[稳定性与性能计算] --> E{计算达标?}
+        E -->|是| F[合成性与成本排序]
+        E -->|否| X[淘汰并记录]
+    end
+    subgraph P3 [实验验证]
+        direction TB
+        G[制备与表征] --> H{实验达标?}
+        H -->|是| I([优选材料])
+        H -->|否| J[更新策略并返回候选阶段]
+    end
+    P1 --> P2
+    P2 --> P3

@@ -19,6 +19,29 @@ Ultra-fast, fully themeable, zero DOM dependencies. Built for the AI era.
 
 ---
 
+## Terminal ELK layout in this fork
+
+This branch adds `mermaid-term`, a terminal-cell layout adapter for flowcharts.
+It reuses the Mermaid parser, ELK engine, canvas, and shape markers. Node sizes
+are measured in terminal columns and rows before layout. Group layouts run
+bottom-up with independent directions; fixed boundary ports join cross-group
+edges. Coordinates are rounded consistently when drawing the terminal grid.
+
+```bash
+npm install --package-lock=false
+npm run build
+node dist/cli.js examples/materials-screening-original.mmd --width 160 --stats
+npm run test:terminal
+```
+
+`mermaid-term` reads a file or standard input. `--width` defaults to the terminal
+width, or 120 columns for piped output. If a horizontal layout does not fit, the
+root groups stack vertically while their internal directions remain intact.
+`--ascii` selects ASCII borders and arrows; `--stats` prints dimensions, blank
+area, route length, and bend count to standard error. The added layout supports
+flowcharts and the existing parser's state diagrams. It does not add ELK layout
+to sequence, class, ER, or XY charts. The existing rendering APIs remain available.
+
 ## Why We Built This
 
 Diagrams are essential for AI-assisted programming. When you're working with an AI coding assistant, being able to visualize data flows, state machines, and system architecture—directly in your terminal or chat interface—makes complex concepts instantly graspable.
