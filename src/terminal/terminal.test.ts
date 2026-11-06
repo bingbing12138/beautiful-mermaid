@@ -100,3 +100,18 @@ test('elbows use corners and incoming edges do not become four-way node junction
   assert.ok(drawing.includes('no'))
   assert.ok(!drawing.includes('┼'))
 })
+
+test('feedback loops preserve the forward process order', () => {
+  const layout = layoutTerminalGraph(`flowchart TD
+    a[Prepare] --> b[Characterize]
+    b --> c{Phase correct?}
+    c -->|yes| e[Measure]
+    c -->|no| d[Adjust]
+    d --> a`, { width: 80 })
+  const node = (id: string) => layout.nodes.find(node => node.id === id)!
+  assert.ok(node('a').y < node('b').y)
+  assert.ok(node('b').y < node('c').y)
+  assert.ok(node('c').y < node('d').y)
+  const feedback = layout.routes.filter(route => route.edge === 4)
+  assert.equal(feedback.filter(route => route.arrowEnd).length, 1)
+})

@@ -97,7 +97,7 @@ function arrange(graph: MermaidGraph, direction: Direction, labelWidth: number):
           ports.push({
             id: portId(group, index, incoming), width: 0, height: 0,
             x: horizontal ? (leading ? 0 : result.width!) : Math.round(result.width! / 2),
-            y: horizontal ? Math.round(result.children![0]!.y! + result.children![0]!.height! / 2) : (leading ? 0 : result.height!),
+            y: horizontal ? 3 : (leading ? 0 : result.height!),
           })
         }
       })
@@ -172,6 +172,7 @@ function arrange(graph: MermaidGraph, direction: Direction, labelWidth: number):
         'elk.layered.spacing.edgeEdgeBetweenLayers': '2',
         'elk.layered.nodePlacement.bk.fixedAlignment': 'BALANCED',
         'elk.layered.considerModelOrder.strategy': 'NODES_AND_EDGES',
+        'elk.layered.cycleBreaking.strategy': 'MODEL_ORDER',
         'elk.padding': container === root ? '[top=1,left=1,bottom=1,right=1]' : '[top=2,left=2,bottom=2,right=2]',
         'elk.nodeSize.minimum': `(${displayWidth(container.label) + 4},0)`,
         'elk.nodeSize.constraints': 'MINIMUM_SIZE',
